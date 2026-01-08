@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MyManager Backoffice</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="dashboard">
+  <div id="login-screen" class="screen">
+    <div class="login-card">
+      <div class="brand">
+        <div class="logo">MM</div>
+        <div>
+          <h1>MyManager</h1>
+          <p class="muted">Backoffice secure</p>
+        </div>
+      </div>
+      <form id="login-form">
+        <div class="form-control">
+          <label for="username">Utilisateur</label>
+          <input id="username" name="username" type="text" placeholder="admin" required>
+        </div>
+        <div class="form-control">
+          <label for="password">Mot de passe</label>
+          <input id="password" name="password" type="password" placeholder="admin" required>
+        </div>
+        <button type="submit" class="btn primary full">Connexion</button>
+        
+      </form>
+    </div>
+  </div>
+
+  <div id="app" class="hidden">
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="logo-link" href="index.html">
+          <div class="logo">MM</div>
+        </a>
+        <nav>
+          <a class="nav-link active" href="index.html" title="Dashboard">
+            <span class="nav-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.7">
+                <rect x="3" y="3" width="7" height="7" stroke="currentColor"></rect>
+                <rect x="14" y="3" width="7" height="7" stroke="currentColor"></rect>
+                <rect x="3" y="14" width="7" height="7" stroke="currentColor"></rect>
+                <rect x="14" y="14" width="7" height="7" stroke="currentColor"></rect>
+              </svg>
+            </span>
+            <span class="nav-text" data-i18n="menu.dashboard">Dashboard</span>
+          </a>
+          <div class="nav-section" data-i18n="menu.entities">Entities</div>
+          <a class="nav-link" href="products.html" title="Products">
+            <span class="nav-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.7">
+                <path d="M4 7h16v10H4z" stroke="currentColor"></path>
+                <path d="M4 7l8-4 8 4" stroke="currentColor"></path>
+              </svg>
+            </span>
+            <span class="nav-text" data-i18n="entities.products">Products</span>
+          </a>
+          <a class="nav-link" href="suppliers.html" title="Suppliers">
+            <span class="nav-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.7">
+                <circle cx="8" cy="8" r="3" stroke="currentColor"></circle>
+                <circle cx="16" cy="8" r="3" stroke="currentColor"></circle>
+                <path d="M2 20c1-4 4-6 6-6" stroke="currentColor"></path>
+                <path d="M22 20c-1-4-4-6-6-6" stroke="currentColor"></path>
+              </svg>
+            </span>
+            <span class="nav-text" data-i18n="entities.suppliers">Suppliers</span>
+          </a>
+          <a class="nav-link" href="customers.html" title="Customers">
+            <span class="nav-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.7">
+                <circle cx="12" cy="8" r="4" stroke="currentColor"></circle>
+                <path d="M4 20c1.6-4 4.7-6 8-6s6.4 2 8 6" stroke="currentColor"></path>
+              </svg>
+            </span>
+            <span class="nav-text" data-i18n="entities.customers">Customers</span>
+          </a>
+          <a class="nav-link" href="warehouses.html" title="Warehouses">
+            <span class="nav-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.7">
+                <path d="M3 10l9-6 9 6v10H3z" stroke="currentColor"></path>
+                <path d="M9 20v-6h6v6" stroke="currentColor"></path>
+              </svg>
+            </span>
+            <span class="nav-text" data-i18n="entities.warehouses">Warehouses</span>
+          </a>
+          <a class="nav-link" href="categories.html" title="Categories">
+            <span class="nav-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.7">
+                <path d="M4 4h8l8 8-8 8H4z" stroke="currentColor"></path>
+                <circle cx="9" cy="9" r="1.5" stroke="currentColor"></circle>
+              </svg>
+            </span>
+            <span class="nav-text" data-i18n="entities.categories">Categories</span>
+          </a>
+          <a class="nav-link" href="orders.html" title="Orders">
+            <span class="nav-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.7">
+                <rect x="5" y="3" width="14" height="18" rx="2" stroke="currentColor"></rect>
+                <path d="M8 8h8M8 12h8M8 16h6" stroke="currentColor"></path>
+              </svg>
+            </span>
+            <span class="nav-text" data-i18n="entities.orders">Orders</span>
+          </a>
+        </nav>
+      </aside>
+
+      <div class="app-main">
+        <header class="topbar">
+          <div>
+            <div class="topbar-title" data-i18n="menu.dashboard">Dashboard</div>
+            <div class="muted tiny">Company overview</div>
+          </div>
+          <div class="top-actions">
+            <select id="language-select" class="select compact">
+              <option value="fr">FR</option>
+              <option value="en">EN</option>
+              <option value="ar">AR</option>
+            </select>
+            <button id="logout-btn" class="btn ghost tiny" data-i18n="actions.logout">Logout</button>
+            <div class="avatar" title="Admin"></div>
+          </div>
+        </header>
+
+        <main id="view-container">
+          <section id="dashboard-view" class="view active">
+            <div class="dashboard-grid single">
+              <div class="dashboard-main">
+                <div class="section-header">
+                  <div>
+                    <h2 data-i18n="menu.dashboard">Dashboard</h2>
+                    <p class="muted tiny">Live KPIs and activity</p>
+                  </div>
+                  <div class="filters">
+                    <select id="dashboard-filter" class="select compact">
+                      <option value="all">All warehouses</option>
+                    </select>
+                    <button id="refresh-dashboard" class="btn ghost tiny" data-i18n="actions.refresh">Refresh</button>
+                  </div>
+                </div>
+
+                <div id="stats-cards" class="stats-row"></div>
+              </div>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <script src="config.js"></script>
+  <script src="utils.js"></script>
+  <script src="storage.js"></script>
+  <script src="state.js"></script>
+  <script src="i18n.js"></script>
+  <script src="charts.js"></script>
+  <script src="crud.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
