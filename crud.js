@@ -32,7 +32,7 @@
         ${fieldsHtml}
         <div class="actions">
           <button class="btn primary" type="submit" data-i18n="actions.save">${t("actions.save")}</button>
-          <button class="btn ghost" type="button" data-action="cancel">${t("actions.cancel")}</button>
+          <button class="btn ghost" type="button" data-action="cancel" data-i18n="actions.cancel">${t("actions.cancel")}</button>
         </div>
       `;
       form.addEventListener("submit", (event) => handleSubmitEntity(event, entity));
@@ -111,6 +111,7 @@ function handleSubmitEntity(event, entity) {
   event.preventDefault();
   const form = event.target;
   const config = entityConfigs[entity];
+  if (!validateEntityForm(form, config)) return;
   const payload = {};
   config.fields.forEach((field) => {
     const value = form[field.key].value;
@@ -127,6 +128,30 @@ function handleSubmitEntity(event, entity) {
   resetForm(entity);
   renderTable(entity);
   renderEntityCharts(entity);
+}
+
+function validateEntityForm(form, config) {
+  config.fields.forEach((field) => {
+    const input = form.elements.namedItem(field.key);
+    if (!input || typeof input.setCustomValidity !== "function") return;
+    input.setCustomValidity("");
+    if (field.type !== "number") return;
+    const raw = String(input.value ?? "").trim();
+    if (!raw) return;
+    const value = Number(raw);
+    if (!Number.isFinite(value)) {
+      input.setCustomValidity(t("validation.number", "Enter a valid number"));
+      return;
+    }
+    const min = field.min ?? 0;
+    if (value < min) {
+      input.setCustomValidity(`${t("validation.min", "Value must be at least")} ${min}.`);
+    }
+  });
+  if (typeof form.reportValidity === "function") {
+    return form.reportValidity();
+  }
+  return form.checkValidity();
 }
 
 function resetForm(entity) {
@@ -267,10 +292,12 @@ function exportPdf(title, htmlContent) {
 }
 
 function inputField(field) {
+  const minAttr =
+    field.min != null ? `min="${field.min}"` : field.type === "number" ? 'min="0"' : "";
   return `
     <div class="form-control">
       <label for="${field.key}">${field.label}</label>
-      <input id="${field.key}" name="${field.key}" type="${field.type}" ${field.step ? `step="${field.step}"` : ""} ${field.required ? "required" : ""}>
+      <input id="${field.key}" name="${field.key}" type="${field.type}" ${minAttr} ${field.step ? `step="${field.step}"` : ""} ${field.required ? "required" : ""}>
     </div>
   `;
 }
